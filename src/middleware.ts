@@ -1,7 +1,7 @@
 import { type NextRequest } from 'next/server'
 import { NextResponse } from 'next/server';
 
-import { createServerClient } from '@supabase/ssr'
+
 
 
 export async function middleware(request: NextRequest) {
@@ -16,7 +16,7 @@ export const config = {
 }
 
 export async function updateSession(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({
+ const supabaseResponse = NextResponse.next({//changed over here
     request,
   })
   console.log("middleware called");

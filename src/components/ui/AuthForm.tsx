@@ -10,7 +10,7 @@ import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 import { loginAction, signUpAction } from "../../actions/users";
-import { title } from "process";
+
 
 type Props = {
   type: "login" | "signUp";
