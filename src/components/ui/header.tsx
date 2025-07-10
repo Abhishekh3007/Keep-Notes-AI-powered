@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { shadow } from '@/app/styles/utils';
 import {Button} from '@/components/ui/button';
 import {ModeToggle} from '@/components/ui/DarkModeToggle'
-import Logoutbutton from '@/components/ui/logoutbutton';
+import LogOutbutton from '@/components/ui/logoutbutton';
 import { getUser } from '@/auth/server';
 
   async function Header() {
@@ -35,7 +35,7 @@ import { getUser } from '@/auth/server';
       </Link>
       <div className="flex  gap-4">
         {user ? (
-           <Logoutbutton/>
+           <LogOutbutton/>
         ) : (
            <>
             <Button className="hidden sm:block" asChild><Link href="/sign-up">SignUp</Link></Button>
