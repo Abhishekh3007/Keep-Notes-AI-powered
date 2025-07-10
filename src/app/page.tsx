@@ -1,9 +1,38 @@
-import React from 'react';
+import { getUser } from "@/auth/server";
+import AskAIButton from "../components/ui/AskAIButton";
+import NewNoteButton from "../components/ui/NewNoteButton";
+import NoteTextInput from "../components/ui/NoteTextInput";
+import HomeToast from "../components/ui/HomeToast";
+import { prisma } from "@/db/prisma";
 
-export default function Page() {
+type Props = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+async function HomePage({ searchParams }: Props) {
+  const noteIdParam = (await searchParams).noteId;
+  const user = await getUser();
+
+  const noteId = Array.isArray(noteIdParam)
+    ? noteIdParam![0]
+    : noteIdParam || "";
+
+  const note = await prisma.note.findUnique({
+    where: { id: noteId, authorId: user?.id },
+  });
+
   return (
-    <div>
-      <h1 className="text-white text-3xl">Hello, Welcome to Keep <span className='text-blue-500'>Notes</span> !</h1>
+    <div className="flex h-full flex-col items-center gap-4">
+      <div className="flex w-full max-w-4xl justify-end gap-2">
+        <AskAIButton user={user} />
+        <NewNoteButton user={user} />
+      </div>
+
+      <NoteTextInput noteId={noteId} startingNoteText={note?.text || ""} />
+
+      <HomeToast />
     </div>
   );
 }
+
+export default HomePage;

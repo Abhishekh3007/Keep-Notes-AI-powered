@@ -3,6 +3,9 @@ import "./styles/globals.css";
 import { ThemeProvider } from "../provider/Themeprovider";
 import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/ui/header";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import  AppSidebar  from "@/components/ui/AppSideBar";
+import NoteProvider from "@/provider/NoteProvider";
 
 export const metadata: Metadata = {
   title: "GOAT Notes",
@@ -22,13 +25,21 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex min-h-screen flex-col">
-            <Header />
-            <main className="flex flex-1 items-center justify-center px-4 py-8">
-              {children}
-            </main>
-          </div>
-          <Toaster />
+          <NoteProvider>
+            <SidebarProvider>
+              <AppSidebar />
+
+              <div className="flex min-h-screen w-full flex-col">
+                <Header />
+
+                <main className="flex flex-1 flex-col px-4 pt-10 xl:px-8">
+                  {children}
+                </main>
+              </div>
+            </SidebarProvider>
+
+            <Toaster />
+          </NoteProvider>
         </ThemeProvider>
       </body>
     </html>
